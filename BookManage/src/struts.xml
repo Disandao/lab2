@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="default" namespace="/" extends="struts-default">
+		<action name="AddBook" class="Actions.AddBook">
+			<result name="success">successAdd.jsp</result>
+			<result name="EXIST">existAdd.jsp</result>
+			<result name="FAILED">failedAdd.jsp</result>
+			<result name="Addauthor">Addauthor.jsp</result>
+		</action>
+		<action name="Addauthor" class="Actions.Addauthor">
+			<result name="success">successAdd.jsp</result>
+			<result name="FAILED">failedAdd.jsp</result>
+		</action>
+		<action name="BookList" class="Actions.ListBook">
+			<result name="success">BookList.jsp</result>
+		</action>
+		<action name="BookDetail" class="Actions.Detail">
+			<result name="success">BookDetail.jsp</result>
+		</action>
+		<action name="ModifyBook" class="Actions.Detail">
+			<result name="success">ModifyBook.jsp</result>
+		</action>	
+		<action name="ModifySuccess" class="Actions.ModifyBook">
+			<result name="success">successMod.jsp</result>
+			<result name="Addauthor">Addauthor.jsp</result>
+			<result name="FAILED">failedMod.jsp</result>
+		</action>
+		<action name="DeleteBook" class="Actions.DeleteBook">
+			<result name="success">index.jsp</result>
+			<result name="FAILED">failedDel.jsp</result>
+		</action>	
+		<action name="Query" class="Actions.Query">
+			<result name="success">AuthorQuery.jsp</result>
+		</action>			
+	</package>
+</struts>    

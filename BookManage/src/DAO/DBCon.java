@@ -1,0 +1,90 @@
+package DAO;
+
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Properties;
+
+public class DBCon {
+	  public Connection conn = null;
+	  public Statement stmt = null;
+	  public ResultSet rs = null;
+	  private static String dbClassName ="com.mysql.jdbc.Driver";
+	  private static String dbUrl =
+	      "jdbc:mysql://w.rdc.sae.sina.com.cn:3307/app_lab2bookmanage?user=05o1z00m3l&password=jhmil0i52hmw4321h0i2x1j223k55mkxm5z340j2&useUnicode=true";
+	  public static Connection getConnection() {
+	    Connection conn = null;
+	    try {
+	      Class.forName(dbClassName).newInstance();
+	     
+	      //conn = DriverManager.getConnection("jdbc:mysql://w.rdc.sae.sina.com.cn:3307/app_lab2bookmanage", "05o1z00m3l", "jhmil0i52hmw4321h0i2x1j223k55mkxm5z340j2");
+	      conn = DriverManager.getConnection(dbUrl);
+	    }
+	    catch (Exception ee) {
+	    	
+	      ee.printStackTrace();
+	    }
+	    if (conn == null) {
+	      System.err.println(
+	          "警告: DbConnectionManager.getConnection() 获得数据库链接失败.\r\n\r\n链接类型:" +
+	          dbClassName + "\r\n链接位置:" + dbUrl);
+	    }
+	    return conn;
+	  }
+
+	/*
+	 * 功能：执行查询语句
+	 */
+	public ResultSet executeQuery(String sql) {
+		try {
+			conn = getConnection();
+			
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			
+			rs = stmt.executeQuery(sql);
+			
+		} catch (SQLException ex) {
+			System.err.println(ex.getMessage());
+		}
+		return rs;
+	}
+
+	/*
+	 * 功能:执行更新操作
+	 */
+	public int executeUpdate(String sql) {
+		int result = 0;
+		try {
+			conn = getConnection();					//调用getConnection()方法构造Connection对象的一个实例conn
+			System.out.println("数据库连接陈工！！！！！！！！！！！！！！！！！！！！");
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			System.out.println("开始更新操作！！！！！！！！！！！！！！！！！！！！");
+			result = stmt.executeUpdate(sql);		//执行更新操作
+			System.out.println("更新成功！！！！！！！！！！！！！！！！！！！"+result);
+		} catch (SQLException ex) {
+			result = 0;
+		}
+		return result;
+	}
+
+	/*
+	 * 功能:关闭数据库的连接
+	 */
+	public void close() {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+	}
+}
